@@ -1,8 +1,28 @@
-//This is a code to both Test and calibrate your TVC gimbal. It will go through a calibration process,
-//Then execute a 10 second countdown. Once that is done, it will comence to do 15 rapid sweeps
-//Afterwards it will then continue sweeping the TVC gimbal at a moderate pace.
-// By: Yukon
-// Canine Rocket Technologies 2019
+/*This is a simple sketch to calibrate your TVC gimbal. It will cycle thorugh both X and Y axis servos, followed by a 10 second
+countdown. After the countdwon is over the ystsme will do a series of quick sweeps followed by a mid speed sweep. It is not 
+reccomened to leave the gimbal vectoring for long periods of time, or the sero may overheat
+
+Wiring:
+Arduino:
+Buzzer             D13
+Servo X            D10
+Servo Y            D11
+LED and resistor   D13
+Battery            Vin, GND
+
+Servo X:
+Brown              GND
+Red                5v
+Orange             D10
+
+Servo Y:
+Brown              GND
+Red                5v
+Orange             D11
+
+Code by: Yukon
+Canine Rocket Technologies 2019
+*/
 
 #include <Servo.h>
 
@@ -10,8 +30,8 @@ int i = 0;
 
 int j = 0;
 
-Servo servo_10;
 
+Servo servo_10;
 Servo servo_11;
 
 int counter;
@@ -21,16 +41,13 @@ int counter2;
 int counter3;
 
 void setup()
-{
-  servo_10.attach(10);
 
-  servo_11.attach(11);
-
-  pinMode(13, OUTPUT);
-}
+//Change number below depending on what digital pin you want to use on the arduino for the servo
 
 void loop()
 {
+  //This is the startup procedure
+ 
   servo_10.write(90);
   servo_11.write(90);
   delay(500); // Wait for 500 millisecond(s)
@@ -74,13 +91,16 @@ void loop()
   servo_10.write(135);
   delay(250); // Wait for 250 millisecond(s)
   servo_10.write(90);
-  for (counter = 0; counter < 10; ++counter) {
+  
+  
+  //This is the countdown procedure
+ { for (counter = 0; counter < 10; ++counter) { //Change the number 10 to however long you want the countdown to be
     digitalWrite(13, HIGH);
     delay(500); // Wait for 500 millisecond(s)
     digitalWrite(13, LOW);
     delay(500); // Wait for 500 millisecond(s)
   }
-  for (counter2 = 0; counter2 < 15; ++counter2) {
+  for (counter2 = 0; counter2 < 15; ++counter2) { //Change the number 15 to however long you want the countdown to be
     servo_10.write(135);
     delay(100); // Wait for 100 millisecond(s)
     servo_11.write(45);
